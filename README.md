@@ -1,24 +1,8 @@
 # PPTV: Official Implementation for "Explore the Ideology of Deep Learning in ENSO Forecasts"
 
-We propose a mathematically grounded interpretability method, Practical Partial Total Variation (PPTV), to break the black box of deep learning models for ENSO forecasting. PPTV helps identify critical geographic regions for prediction and analyzes the model's behavior under different conditions, such as the Spring Predictability Barrier (SPB).
+This repository contains the official code implementation for the paper: **Explore the Ideology of Deep Learning in ENSO Forecasts**.
 
-## Repository Structure
-
-```
-.
-├── data/                 # Data downloading and preprocessing instructions
-├── src/                  # Core source code
-│   ├── models.py         # CNN model architecture
-│   ├── pptv.py           # PPTV method implementation
-│   └── comparison_methods.py # Implementations for Grad-CAM, etc.
-├── scripts/              # Scripts to run experiments and generate figures
-│   ├── 1_run_interpretability.py
-│   ├── 2_run_retrain_validation.py
-│   └── 3_plot_figures.py
-├── results/              # Directory to save generated figures and data (ignored by git)
-├── environment.yml       # Conda environment file
-└── README.md
-```
+We propose a mathematically grounded interpretability method, Practical Partial Total Variation (PPTV), to break the black box of deep learning models for ENSO forecasting. This code allows you to reproduce the main findings, including the PPTV heatmaps, comparisons with other methods, and the retraining validation experiments presented in the paper.
 
 ## Setup
 
@@ -29,35 +13,93 @@ cd PPTV
 ```
 
 ### 2. Create Conda Environment
-We recommend using Conda to manage the dependencies.
+The code was originally developed using TensorFlow 1.x. We recommend using Conda to create a consistent environment. You can create an `environment.yml` file with the content below and run `conda env create -f environment.yml`.
+
+**`environment.yml` content:**
+```yml
+name: pptv-enso-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.7
+  - tensorflow-gpu=1.15
+  - numpy
+  - matplotlib
+  - netcdf4
+  - xarray
+  - scipy
+  - tqdm
+```
+Then activate the environment:
+```bash
+conda activate pptv-enso-env
+```
 
 ### 3. Download Data
-The models are trained and evaluated on the GODAS, CMIP5, and SODA datasets. Please follow the instructions in `data/README.md` to download and place the data in the correct directories.
+The models are trained and evaluated on the **GODAS**, **CMIP5**, and **SODA** datasets. Please download them from their official sources and place them in a `data/` directory.
 
-### 4. Pre-trained Models
-Place them in a `pretrained_models/` directory.
+*   **GODAS:** [psl.noaa.gov/data/gridded/data.godas.html](https://www.psl.noaa.gov/data/gridded/data.godas.html)
+*   **CMIP5:** [esgf-node.llnl.gov/projects/cmip5/](https://esgf-node.llnl.gov/projects/cmip5/)
+*   **SODA:** [climatedataguide.ucar.edu/climate-data/soda-simple-ocean-data-assimilation](https://climatedataguide.ucar.edu/climate-data/soda-simple-ocean-data-assimilation)
 
-## Usage: Reproducing Paper Results
+### 4. Download Pre-trained Models
+To run the interpretability analysis directly without retraining, you need our pre-trained models. Please download the model checkpoints from the link below and place them in a `pretrained_models/` directory.
 
-The following scripts allow you to reproduce the key findings of our paper.
+**[❗️请在此处提供您的预训练模型下载链接 (例如，Google Drive, Zenodo)]**
 
-### 1. Run PPTV and other Interpretability Methods
-To generate the importance maps for a given lead time (e.g., 1 month), run:
-```bash
-python scripts/1_run_interpretability.py --method pptv --lead_time 1 --output_dir results/maps
+---
+
+## How to Reproduce Results
+
+This repository contains a direct copy of the development scripts. Each script is independent. The general workflow to reproduce the paper's findings is as follows:
+
+### Step 1: Generate Importance Maps (Heatmaps)
+
+The core logic for generating heatmaps is located in the `src/` directory. You will need to run these scripts individually.
+
+*   **For PPTV:** Run the scripts with `grad` in their names.
+    *   Example script: `src/grad_grad.cnn.sample.py`
+*   **For Comparison Methods:** Run the scripts corresponding to each method.
+    *   **Grad-CAM:** `src/gradcam_...py`
+    *   **Score-CAM:** `src/scorecam_...py`
+
+**Note:** You may need to open these scripts and manually adjust the paths to the pre-trained models and input data to match your local setup.
+
+### Step 2: Run Retraining Validation
+
+The scripts for performing the retraining validation experiments (Fig. 1b) are located in the `scripts/` directory.
+
+*   Look for scripts with `retrain` in their names, such as:
+    *   `scripts/retrainmul&concat_...py`
+    *   `scripts/retrainscorecam_...py`
+*   These scripts typically take the heatmaps generated in Step 1 as input (to be used as masks). You will likely need to edit the script to provide the correct path to these masks.
+
+### Step 3: Plot Figures
+
+The scripts used to generate the final figures for the paper (Fig. 1-5) are located in the `scripts/` directory.
+
+*   Look for scripts with `figure` in their names, for example:
+    *   `scripts/figure_figure_PTPV.py` (to plot PPTV results)
+    *   `scripts/figure_figure_springforecast.py` (to plot seasonal analysis)
+    *   `scripts/figure_relationcnn.py` (to plot correlation skills)
+*   Run these scripts after you have generated all the necessary data from the steps above. The scripts will read the data from your results directories and create the plots.
+
+---
+
+## Citation
+
+If you find our work or this code useful in your research, please cite our paper:
+
+```bibtex
+@article{Gan202X,
+  author    = {Gan, Yanhai and Chen, Yipeng and Li, Ning and Li, Xiangtan and Dong, Junyu and Chen, Xianyao},
+  title     = {Explore the Ideology of Deep Learning in ENSO Forecasts},
+  journal   = {Earth and Space Science},
+  year      = {202X},
+  % ❗️请在论文发表后补充 volume, pages, doi 等信息
+}
 ```
-*   `--method`: Can be `pptv`, `gradcam`, `perturbation`, `vbp`.
-*   This will save the generated `.nc` or `.npy` files in the specified output directory.
 
-### 2. Run Retraining Validation
-To validate the importance of the regions identified by PPTV (as in Fig. 1b), run:
-```bash
-python scripts/2_run_retrain_validation.py --mask_path results/maps/pptv_lead1.nc --output_dir results/retrain_skill
-```
-
-### 3. Generate Figures
-To generate the figures from the paper (e.g., Fig. 1, 2, 3, 4, 5) using the pre-computed results, run:
-```bash
-python scripts/3_plot_figures.py --results_path results/ --figure_id 1
-```
-*   `--figure_id`: Specifies which figure to plot (e.g., 1, 2, 3, 4, 5, or 'all').
+## License
+This project is licensed under the MIT License.
