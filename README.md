@@ -84,22 +84,3 @@ The scripts used to generate the final figures for the paper (Fig. 1-5) are loca
     *   `scripts/figure_figure_springforecast.py` (to plot seasonal analysis)
     *   `scripts/figure_relationcnn.py` (to plot correlation skills)
 *   Run these scripts after you have generated all the necessary data from the steps above. The scripts will read the data from your results directories and create the plots.
-
----
-
-## Citation
-
-If you find our work or this code useful in your research, please cite our paper:
-
-```bibtex
-@article{Gan202X,
-  author    = {Gan, Yanhai and Chen, Yipeng and Li, Ning and Li, Xiangtan and Dong, Junyu and Chen, Xianyao},
-  title     = {Explore the Ideology of Deep Learning in ENSO Forecasts},
-  journal   = {Earth and Space Science},
-  year      = {202X},
-  % ❗️请在论文发表后补充 volume, pages, doi 等信息
-}
-```
-
-## License
-This project is licensed under the MIT License.
