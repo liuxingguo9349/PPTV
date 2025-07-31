@@ -30,10 +30,6 @@ cd PPTV
 
 ### 2. Create Conda Environment
 We recommend using Conda to manage the dependencies.
-```bash
-conda env create -f environment.yml
-conda activate pptv-env
-```
 
 ### 3. Download Data
 The models are trained and evaluated on the GODAS, CMIP5, and SODA datasets. Please follow the instructions in `data/README.md` to download and place the data in the correct directories.
