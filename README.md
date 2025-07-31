@@ -43,12 +43,8 @@ The models are trained and evaluated on the **GODAS**, **CMIP5**, and **SODA** d
 *   **CMIP5:** [esgf-node.llnl.gov/projects/cmip5/](https://esgf-node.llnl.gov/projects/cmip5/)
 *   **SODA:** [climatedataguide.ucar.edu/climate-data/soda-simple-ocean-data-assimilation](https://climatedataguide.ucar.edu/climate-data/soda-simple-ocean-data-assimilation)
 
-### 4. Download Pre-trained Models
-To run the interpretability analysis directly without retraining, you need our pre-trained models. Please download the model checkpoints from the link below and place them in a `pretrained_models/` directory.
-
-**[❗️请在此处提供您的预训练模型下载链接 (例如，Google Drive, Zenodo)]**
-
----
+### 4. Pre-trained Models
+Place them in a `pretrained_models/` directory.
 
 ## How to Reproduce Results
 
