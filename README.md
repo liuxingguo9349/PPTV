@@ -38,8 +38,7 @@ conda activate pptv-env
 ### 3. Download Data
 The models are trained and evaluated on the GODAS, CMIP5, and SODA datasets. Please follow the instructions in `data/README.md` to download and place the data in the correct directories.
 
-### 4. Download Pre-trained Models
-Download the pre-trained model weights used in our paper from [this link](). <!-- 强烈建议您将训练好的模型上传到 Google Drive / Zenodo 等并提供链接 -->
+### 4. Pre-trained Models
 Place them in a `pretrained_models/` directory.
 
 ## Usage: Reproducing Paper Results
@@ -66,18 +65,3 @@ To generate the figures from the paper (e.g., Fig. 1, 2, 3, 4, 5) using the pre-
 python scripts/3_plot_figures.py --results_path results/ --figure_id 1
 ```
 *   `--figure_id`: Specifies which figure to plot (e.g., 1, 2, 3, 4, 5, or 'all').
-
-## Citation
-If you find our work useful, please consider citing our paper:
-```bibtex
-@article{Gan202X,
-  author    = {Gan, Yanhai and Chen, Yipeng and Li, Ning and Li, Xiangtan and Dong, Junyu and Chen, Xianyao},
-  title     = {Explore the Ideology of Deep Learning in ENSO Forecasts},
-  journal   = {Earth and Space Science},
-  year      = {202X},
-  % volume, pages, doi...
-}
-```
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
